@@ -2,9 +2,10 @@
 
 import requests
 import re
+import sys
 
 """Global variables"""
-target = 'http://THE.TARGET/'				#Put your own target here! ;)
+target = raw_input('Please enter a target: ')
 cookie = dict(PHPSESSID='barf62dadv7v46t991g9g8s2p5')	#Put your own cookie here! Or not?!?
 extracting = 1						#Initiate the script.
 the_num = ''
@@ -56,7 +57,7 @@ def finish(end):
 while extracting:
 	try:	
 		r = requests.get(target+'number.php', cookies = cookie)
-	except requests.exceptions.ConnectionError:
+	except (requests.exceptions.ConnectionError,requests.exceptions.MissingSchema):
 		print "The target is not defined!!! Please define a target!!!"
 		break
 	input = r.text
