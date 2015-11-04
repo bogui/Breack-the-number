@@ -4,7 +4,7 @@ import requests
 import re
 
 """Global variables"""
-target = 'http://s39701-102007-9gm.tarentum.hack.me/'	#Put your own target here! ;)
+target = 'http://THE.TARGET/'	#Put your own target here! ;)
 cookie = dict(PHPSESSID='barf62dadv7v46t991g9g8s2p5')	#Put your own cookie here! Or not?!?
 extracting = 1						#Initiate the script.
 the_num = ''
