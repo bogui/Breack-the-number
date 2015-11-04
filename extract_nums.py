@@ -2,7 +2,6 @@
 
 import requests
 import re
-import sys
 
 """Global variables"""
 target = raw_input('Please enter a target: ')
