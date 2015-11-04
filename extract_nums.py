@@ -57,7 +57,7 @@ while extracting:
 	try:	
 		r = requests.get(target+'number.php', cookies = cookie)
 	except requests.exceptions.ConnectionError:
-		print "The target is not defined!!! Please define target!!!"
+		print "The target is not defined!!! Please define a target!!!"
 		break
 	input = r.text
 	checks(input)
