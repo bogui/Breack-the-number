@@ -2,12 +2,19 @@
 
 import requests
 import re
+import sys
 
-s = requests.get(target+'/number.php')				#Grab the session cookie.
 
-"""Global variables"""
+"""Global variables and initial checks to guarantee the corect functionality"""
 target = raw_input('Please enter a target: ')			#Ask the user for target.
 #target = [http://YOUR TARGET HERE]				#If you prefere so, hardcode the target.
+t = re.search('http://',target)
+if not t:
+	target = 'http://'+target
+try:
+	s = requests.get(target+'/number.php')				#Grab the session cookie.
+except (requests.exceptions.ConnectionError,requests.exceptions.MissingSchema):
+		sys.exit("Please define a target in format 'http://TARGET HERE' or\n'TARGET HERE' (without the 'http://' protocol part)!!!")		
 cookie = dict(PHPSESSID=s.cookies['PHPSESSID'])			#Assign the cookie to a variable.
 #cookie = dict(PHPSESSID='barf62dadv7v46t991g9g8s2p5')		#Put your own cookie here! Or not?!?
 extracting = 1							#Initiate the script.
