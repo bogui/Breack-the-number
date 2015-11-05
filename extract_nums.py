@@ -4,19 +4,22 @@ import requests
 import re
 
 """Global variables"""
-target = raw_input('Please enter a target: ')
-cookie = dict(PHPSESSID='barf62dadv7v46t991g9g8s2p5')	#Put your own cookie here! Or not?!?
-extracting = 1						#Initiate the script.
-the_num = ''
-numbers = ''
+target = raw_input('Please enter a target: ')			#Ask the user for target.
+#target = [http://YOUR TARGET HERE]						#If you prefere so, hardcode the target.
+s = requests.get(target+'/number.php')					#Grab the session cookie.
+cookie = dict(PHPSESSID=s.cookies['PHPSESSID'])			#Assign the cookie to a variable.
+#cookie = dict(PHPSESSID='barf62dadv7v46t991g9g8s2p5')	#Put your own cookie here! Or not?!?
+extracting = 1											#Initiate the script.
+the_num = ''											#Initiate the guessed number variable.
+numbers = []											#Initiate the array of numbers.
 
-"""Performs all general checks"""
-def checks(input):
-	out = re.findall(r'<p>(.+?)<br />The', input)
+"""Performs all general checks and variable assignments"""
+def checks(income):
+	out = re.findall(r'<p>(.+?)<br />The', income)
 	getNum(out)
-	val = re.findall(r'<br />The (.*?) number\?<br />', input)
+	val = re.findall(r'<br />The (.*?) number\?<br />', income)
 	checkNum(val)
-	end = re.findall('<center>(.*?)</center>',input)
+	end = re.findall('<center>(.*?)</center>',income)
 	finish(end)
 
 """Gets the array of suplied numbers"""
@@ -26,7 +29,7 @@ def getNum(out):
 	numbers = map(int, out[0].split(","))
 	print numbers
 
-"""Performs check of the suplied numbers"""
+"""Performs check of the suplied numbers depending of the rule"""
 def checkNum(val):
 	global the_num, extracting
 	
@@ -41,8 +44,8 @@ def checkNum(val):
 	print the_num
 
 """Executes the post recuests to the remote server"""
-def connection(payload, cookie):
-	requests.request('POST', target+'proc.php', data = payload, cookies = cookie)
+def connection(payload, cookiee):
+	p = requests.request('POST', target+'/proc.php', data = payload, cookies = cookiee)
 
 """If the flag is found stops the script and prints the flag"""
 def finish(end):
@@ -55,11 +58,11 @@ def finish(end):
 """The Main loop"""	
 while extracting:
 	try:	
-		r = requests.get(target+'number.php', cookies = cookie)
+		r = requests.get(target+'/number.php', cookies = cookie)
 	except (requests.exceptions.ConnectionError,requests.exceptions.MissingSchema):
 		print "The target is not defined!!! Please define a target!!!"
 		break
-	input = r.text
-	checks(input)
+	income = r.text
+	checks(income)
 	payload = {'number':the_num, 'submit':'submit'}
 	connection(payload, cookie)
