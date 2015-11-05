@@ -50,6 +50,7 @@ def checkNum(val):
 		extracting = 0
 	print 'Guessing the '+val[0]+' number!' 
 	print the_num
+	print '\n'
 
 """Executes the post recuests to the remote server"""
 def connection(payload, cookiee):
