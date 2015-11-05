@@ -23,9 +23,9 @@ numbers = []							#Initiate the array of numbers.
 
 """Performs all general checks and dynamic variables assignments"""
 def checks(income):
-	out = re.findall(r'<p>(.+?)<br />The', income)
+	out = re.findall('<p>(.+?)<br />The', income)
 	getNum(out)
-	val = re.findall(r'<br />The (.*?) number\?<br />', income)
+	val = re.findall('<br />The (.*?) number\?<br />', income)
 	checkNum(val)
 	end = re.findall('<center>(.*?)</center>',income)
 	finish(end)
