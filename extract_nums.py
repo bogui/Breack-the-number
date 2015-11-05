@@ -3,10 +3,11 @@
 import requests
 import re
 
+s = requests.get(target+'/number.php')				#Grab the session cookie.
+
 """Global variables"""
 target = raw_input('Please enter a target: ')			#Ask the user for target.
 #target = [http://YOUR TARGET HERE]				#If you prefere so, hardcode the target.
-s = requests.get(target+'/number.php')				#Grab the session cookie.
 cookie = dict(PHPSESSID=s.cookies['PHPSESSID'])			#Assign the cookie to a variable.
 #cookie = dict(PHPSESSID='barf62dadv7v46t991g9g8s2p5')		#Put your own cookie here! Or not?!?
 extracting = 1							#Initiate the script.
