@@ -14,7 +14,7 @@ extracting = 1							#Initiate the script.
 the_num = ''							#Initiate the guessed number variable.
 numbers = []							#Initiate the array of numbers.
 
-"""Performs all general checks and variable assignments"""
+"""Performs all general checks and dynamic variables assignments"""
 def checks(income):
 	out = re.findall(r'<p>(.+?)<br />The', income)
 	getNum(out)
