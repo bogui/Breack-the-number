@@ -2,7 +2,8 @@
 
 import requests
 import re
-import sys
+from time import sleep
+from sys import exit
 
 
 """Global variables and initial checks to guarantee the corect functionality"""
@@ -16,6 +17,12 @@ try:
 except (requests.exceptions.ConnectionError,requests.exceptions.MissingSchema):
 	sys.exit("Please define a target in format 'http://TARGET HERE' or\n'TARGET HERE' (without the 'http://' protocol part)!!!")		
 cookie = dict(PHPSESSID=s.cookies['PHPSESSID'])			#Assign the cookie to a variable.
+print "Extracting the session cookie"
+time.sleep(5)
+print "The cookie is - PHPSESSID="+s.cookies['PHPSESSID']
+time.sleep(3)
+print "Extracting numbers"
+time.sleep(3)
 #cookie = dict(PHPSESSID='barf62dadv7v46t991g9g8s2p5')		#Put your own cookie here! Or not?!?
 extracting = 1							#Initiate the script.
 the_num = ''							#Initiate the guessed number variable.
@@ -63,15 +70,14 @@ def finish(end):
 	if end:
 		extracting = 0
 		print end[0]
+		print '\n'
 
 """The Main loop"""	
-while extracting:
-	try:	
+def main():
+	while extracting:
 		r = requests.get(target+'/number.php', cookies = cookie)
-	except (requests.exceptions.ConnectionError,requests.exceptions.MissingSchema):
-		print "The target is not defined!!! Please define a target!!!"
-		break
-	income = r.text
-	checks(income)
-	payload = {'number':the_num, 'submit':'submit'}
-	connection(payload, cookie)
+		income = r.text
+		checks(income)
+		payload = {'number':the_num, 'submit':'submit'}
+		connection(payload, cookie)
+main()
