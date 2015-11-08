@@ -2,7 +2,7 @@
 
 import requests
 import re
-from time import sleep
+import time
 from sys import exit
 
 
