@@ -6,6 +6,7 @@ from time import sleep
 from sys import exit,stdout
 from os import system
 
+
 """Global variables and initial checks to guarantee the corect functionality"""
 target = raw_input('Please enter a target: ')			#Ask the user for target.
 #target = [http://YOUR TARGET HERE]				#If you prefere so, hardcode the target.
@@ -14,7 +15,7 @@ if not t:
 	target = 'http://'+target
 try:
 	s = requests.get(target+'/number.php')			#Grab the session cookie.
-except (requests.exceptions.ConnectionError,requests.exceptions.MissingSchema,NameError):
+except (requests.exceptions.ConnectionError,requests.exceptions.MissingSchema,NameError,ValueError):
 	exit("Please define a target in format 'http://TARGET HERE' or\n'TARGET HERE' (without the 'http://' protocol part)!!!")		
 try:
 	cookie = dict(PHPSESSID=s.cookies['PHPSESSID'])			#Assign the cookie to a variable.
@@ -25,7 +26,7 @@ for sec in range(1,7,1):
 	stdout.flush()
 	sleep(0.7)
 	print '.',
-print "\nThe cookie is - PHPSESSID="+s.cookies['PHPSESSID']
+print "\n\033[1;32m"+"The cookie is - PHPSESSID="+s.cookies['PHPSESSID']+"\033[0;32m"
 sleep(1)
 print "Extracting numbers",
 for sec in range(1,7,1):
@@ -52,9 +53,9 @@ def getNum(out):
 	global numbers,i
 	
 	numbers = map(int, out[0].split(","))
-	print "\n\nRequest No. "+str(i)
+	print "\n\nRequest No. "+'\033[38;5;45m'+str(i)+'\033[0;32m'
 	i = i + 1
-	print numbers
+	print '\033[38;5;226m'+str(numbers)+'\033[0;32m'
 
 """Performs check of the suplied numbers depending of the rule"""
 def checkNum(val):
@@ -67,9 +68,8 @@ def checkNum(val):
 	else:
 		print "Someting went wrong!";
 		extracting = 0
-	print 'Guessing the '+val[0]+' number!' 
-	print the_num
-	print '\n'
+	print 'Guessing the '+'\033[38;5;214m'+val[0]+'\033[0;32m'+' number!' 
+	print '\033[38;5;226m'+str(the_num)+'\033[0;32m'
 
 """Executes the post recuests to the remote server"""
 def connection(payload, cookiee):
@@ -81,7 +81,7 @@ def finish(end):
 	
 	if end:
 		extracting = 0
-		print end[0]
+		print "\033[1;32m"+"\n"+end[0]
 		print '\n'
 
 """The Main loop"""	
