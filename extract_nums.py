@@ -1,15 +1,15 @@
 #! /usr/bin/env python
 
 import requests
-import re
-import time
+from re import findall, search
+from time import sleep
 from sys import exit
 
 
 """Global variables and initial checks to guarantee the corect functionality"""
 target = raw_input('Please enter a target: ')			#Ask the user for target.
 #target = [http://YOUR TARGET HERE]				#If you prefere so, hardcode the target.
-t = re.search('http://',target)
+t = search('http://',target)
 if not t:
 	target = 'http://'+target
 try:
@@ -18,11 +18,11 @@ except (requests.exceptions.ConnectionError,requests.exceptions.MissingSchema):
 	sys.exit("Please define a target in format 'http://TARGET HERE' or\n'TARGET HERE' (without the 'http://' protocol part)!!!")		
 cookie = dict(PHPSESSID=s.cookies['PHPSESSID'])			#Assign the cookie to a variable.
 print "Extracting the session cookie"
-time.sleep(5)
+sleep(3)
 print "The cookie is - PHPSESSID="+s.cookies['PHPSESSID']
-time.sleep(3)
+sleep(1)
 print "Extracting numbers"
-time.sleep(3)
+sleep(3)
 #cookie = dict(PHPSESSID='barf62dadv7v46t991g9g8s2p5')		#Put your own cookie here! Or not?!?
 extracting = 1							#Initiate the script.
 the_num = ''							#Initiate the guessed number variable.
@@ -30,11 +30,11 @@ numbers = []							#Initiate the array of numbers.
 
 """Performs all general checks and dynamic variables assignments"""
 def checks(income):
-	out = re.findall('<p>(.+?)<br />The', income)
+	out = findall('<p>(.+?)<br />The', income)
 	getNum(out)
-	val = re.findall('<br />The (.*?) number\?<br />', income)
+	val = findall('<br />The (.*?) number\?<br />', income)
 	checkNum(val)
-	end = re.findall('<center>(.*?)</center>',income)
+	end = findall('<center>(.*?)</center>',income)
 	finish(end)
 
 """Gets the array of suplied numbers"""
