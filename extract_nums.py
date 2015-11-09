@@ -8,15 +8,20 @@ from os import system
 
 
 """Global variables and initial checks to guarantee the corect functionality"""
-target = raw_input('Please enter a target: ')			#Ask the user for target.
+target = raw_input('Please enter a target in format "http://TARGET": ')			#Ask the user for target.
 #target = [http://YOUR TARGET HERE]				#If you prefere so, hardcode the target.
-t = search('http://',target)			#Simple check of the supplied input.
+if not search('http://', target) or search('/(.+?).php',target):
+	exit('Please enter a target in format "http://TARGET"')
+print target
+t = search('http://',target)					#Simple check of the supplied input.
 if not t:
-	target = 'http://'+target
+	target = 'http://'+target				#Securely add the 
+print target
 try:
 	s = requests.get(target+'/number.php')			#Grab the session cookie.
 except (requests.exceptions.ConnectionError,requests.exceptions.MissingSchema,NameError,ValueError):
 	exit("Please define a target in format 'http://TARGET HERE' or\n'TARGET HERE' (without the 'http://' protocol part)!!!")		
+#cookie = dict(PHPSESSID='barf62dadv7v46t991g9g8s2p5')		#Put your own cookie here! Or not?!?
 try:
 	cookie = dict(PHPSESSID=s.cookies['PHPSESSID'])			#Assign the cookie to a variable.
 except(KeyError):
@@ -33,7 +38,6 @@ for sec in range(1,7,1):
 	sleep(0.7)
 	stdout.flush()
 	print '.',
-#cookie = dict(PHPSESSID='barf62dadv7v46t991g9g8s2p5')		#Put your own cookie here! Or not?!?
 extracting = 1							#Initiate the script.
 the_num = ''							#Initiate the guessed number variable.
 numbers = []							#Initiate the array of numbers.
@@ -87,7 +91,6 @@ def finish(end):
 """The Main loop"""	
 def main():
 	while extracting:
-		stdout.flush()
 		r = requests.get(target+'/number.php', cookies = cookie)
 		income = r.text
 		checks(income)
