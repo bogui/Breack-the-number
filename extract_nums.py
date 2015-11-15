@@ -12,7 +12,6 @@ target = raw_input('Please enter a target in format "http://TARGET": ')			#Ask t
 #target = [http://YOUR TARGET HERE]				#If you prefere so, hardcode the target.
 if not search('http://', target) or search('/(.+?).php',target):
 	exit('Please enter a target in format "http://TARGET"')
-print target
 t = search('http://',target)					#Simple check of the supplied input.
 if not t:
 	target = 'http://'+target				#Securely add the 
