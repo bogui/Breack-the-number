@@ -1,4 +1,4 @@
 # Breack-the-number
-from CTF game
+from CTF game https://hack.me/
 
-Python "Requests" module is required for this script to work.
+Requires Python 2.7 and it's "Requests" module.
