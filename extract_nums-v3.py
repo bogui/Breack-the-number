@@ -1,6 +1,9 @@
 #! /usr/bin/env python
 
-import requests
+try:
+	import requests
+except(ImportError): 
+	exit("\n[-]\tNeed Python Requests module in order for this script to work!\n")
 from re import findall, search
 from time import sleep
 from sys import exit,stdout,version_info
@@ -37,7 +40,7 @@ target = input('[+]	Please enter a target in format "http://TARGET": ')			#Ask t
 t = search('http://',target)					#Simple check of the supplied input.
 if not t:
 	target = 'http://'+target				#Securely add the target
-print("[+]\tTarget is:\t" + "\033[1;32m" + target + "\033[0;32m")
+print("[+]\tTarget is:\t" + target)
 try:
 	s = requests.get(target+'/number.php')			#Grab the session cookie.
 except (requests.exceptions.ConnectionError,requests.exceptions.MissingSchema,NameError,ValueError):
