@@ -3,7 +3,7 @@
 try:
 	import requests
 except(ImportError): 
-	exit("\n[-]\tNeed Python Requests module in order for this script to work!\n")
+	exit("\n[-]\tYou need Python Requests module in order for this script to work!\n")
 from re import findall, search
 from time import sleep
 from sys import exit,stdout,version_info
