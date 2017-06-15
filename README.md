@@ -8,3 +8,5 @@ Requires Python 2.7 and it's "Requests" module.
 Make changes to support python 3.5
 
 ## Added support for Python 3.5 in separate script - v3
+
+Added classes and wrapper detecting the Python version
