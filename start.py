@@ -2,7 +2,7 @@
 
 from sys import version_info
 
-if version_info[0] < 3:
+if version_info.major < 3:
 	import extract_nums as v2
 	e2 = v2.ExtractNums
 	e2.cookie(e2.target())
